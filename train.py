@@ -8,6 +8,8 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
+import matplotlib.pyplot as plt
+
 from torchvision import transforms, datasets
 
 ## 트레이닝 파라메터 설정하기
@@ -157,7 +159,7 @@ class Dataset(torch.utils.data.Dataset):
     def __len__(self):
         return len(self.lst_label)
 
-    def __getitem__(selfself, index):
+    def __getitem__(self, index):
         label = np.load(os.path.join(self.data_dir, self.lst_label[index]))
         input = np.load(os.path.join(self.data_dir, self.lst_input[index]))
 
@@ -165,6 +167,33 @@ class Dataset(torch.utils.data.Dataset):
         input = input/255.0
 
         if label.ndim == 2:
-            label = label[:,:, np.newaxis]
+            label = label[:, :, np.newaxis]
+        if input.ndim == 2:
+            input = input[:, :, np.newaxis]
 
+        data = {'input': input, 'label' : label}
 
+        if self.transform:
+            data = self.transform(data)
+
+        return data
+
+##
+dataset_train = Dataset(data_dir=os.path.join(data_dir, 'train'))
+
+##
+data = dataset_train.__getitem__(0)
+
+input = data['input']
+label = data['label']
+
+##
+plt.subplot(121)
+plt.imshow(input.squeeze())
+
+plt.subplot(122)
+plt.imshow(label.squeeze())
+
+plt.show()
+
+##
