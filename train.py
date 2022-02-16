@@ -262,10 +262,10 @@ plt.show()
 transform = transforms.Compose([Normalization(mean=0.5, std=0.5), RandomFlip(), ToTensor()])
 
 dataset_train = Dataset(data_dir=os.path.join(data_dir, 'train'), transform=transform)
-loader_train = DataLoader(dataset_train, batch_size=batch_size, shuffle=True, num_workers=0)
+loader_train = DataLoader(dataset_train, batch_size=batch_size, shuffle=True, num_workers=8)
 
 dataset_val = Dataset(data_dir=os.path.join(data_dir, 'val'), transform=transform)
-loader_val = DataLoader(dataset_val, batch_size=batch_size, shuffle=True, num_workers=0)
+loader_val = DataLoader(dataset_val, batch_size=batch_size, shuffle=True, num_workers=8)
 
 ## 네트워크 생성하기
 net = UNet().to(device)
@@ -388,7 +388,7 @@ for epoch in range(st_epoch + 1, num_epoch + 1):
 
     writer_val.add_scalar('loss', np.mean(loss_arr), epoch)
 
-    if epoch % 10 == 0:
+    if epoch % 5 == 0:
         save(ckpt_dir=ckpt_dir, net=net, optim=optim, epoch=epoch)
 
 writer_train.close()
