@@ -168,7 +168,8 @@ if mode =='train':
 
                 loss_arr += [loss.item()]
 
-                print("VALID: EPOCH %O4d / %04d | BATCH %04d / %04d | LOSS %.4f" % (epoch, num_epoch, batch, num_batch_val, np.mean(loss_arr)))
+                print("VALID: EPOCH %O4d / %04d | BATCH %04d / %04d | LOSS %.4f"
+                      % (epoch, num_epoch, batch, num_batch_val, np.mean(loss_arr)))
 
                 # Tensorboard 저장하기
                 label = fn_tonumpy(label)
