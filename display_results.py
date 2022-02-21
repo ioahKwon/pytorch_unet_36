@@ -20,7 +20,7 @@ id = 0
 
 label = np.load(os.path.join(result_dir, lst_label[id]))
 input = np.load(os.path.join(result_dir, lst_input[id]))
-output = np.load(os.path.join(result_dir, lst_ouput[id]))
+output = np.load(os.path.join(result_dir, lst_output[id]))
 
 ##
 plt.subplot(131)
